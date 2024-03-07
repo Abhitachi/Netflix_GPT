@@ -1,53 +1,68 @@
-import React, { useState } from "react";
-import { logo } from "../utils/constant";
+// import React from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { logo, user_url } from "../utils/constant";
+import { auth } from "../utils/Firebase";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useEffect } from "react";
+import Error from "./Error";
 
 const Header = () => {
-  const [isSignIn, setIsSignin] = useState(false);
+  const navigate = useNavigate();
+  const currentUser = useSelector((store) => store.user);
+  const dispatch = useDispatch();
 
-  const handleSignIn = () => {
-    setIsSignin(!isSignIn);
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+        <Error />;
+      });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        const { uid, displayName, email, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: user_url,
+          })
+        );
+        console.log(currentUser);
+        navigate("/browse");
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <div className="absolute w-full">
-      <div>
-        <img src={logo} alt="" className="w-48" />
-      </div>
-      <div className="m-auto w-6/12 flex flex-col justify-center items-center align-middle ">
-        <form className="z-10 flex flex-col justify-center align-middle  text-white items-center gap-5 w-3/4 bg-black  my-20 pt-2 pb-8 px-3 rounded-2xl bg-opacity-80">
-          <div className="relative px-4 py-2 w-full my-2">
-            <h2 className="text-xl font-extrabold text-white px-4 py-2 mb-2 left-10 top-0  absolute inline-block">
-              {isSignIn ? "Sign Up" : "Sign In"}
-            </h2>
-          </div>
-          {isSignIn && (
-            <input
-              placeholder="Enter Your Full Name"
-              type="text"
-              className="w-9/12 m-auto px-2 py-2 rounded-md bg-gray-600"
-            />
-          )}
-          <input
-            type="text"
-            placeholder="Enter Your Email or Phone Numbaer"
-            className="w-9/12 m-auto px-2 py-2 rounded-md bg-gray-600"
-          />
-          <input
-            type="password"
-            placeholder="Enter Your Password"
-            className="w-9/12 m-auto px-2 py-2 rounded-md bg-gray-600"
-          />
-          <button className="bg-red-600 py-2 px-4 w-9/12 rounded-md font-bold text-white">
-            {isSignIn ? "Sign Up" : "Sign In"}
+    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
+      <img src={logo} alt="" className="w-48" />
+      {currentUser && (
+        <div className="p-4 flex gap-6 align-middle">
+          <img src={user_url} alt="" className="w-16" />
+          <button
+            onClick={handleSignOut}
+            className="btn text-white font-bold rounded-md px-4 h-10"
+          >
+            Sign Out
           </button>
-          <span className="">
-            {" "}
-            {isSignIn ? "Already A Member?" : " New To Netflix?"}
-            <span onClick={handleSignIn}>
-              {isSignIn ? "Sign In" : "Sign Up"} Now
-            </span>
-          </span>
-        </form>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
