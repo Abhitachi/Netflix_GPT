@@ -7,10 +7,18 @@ export const logo =
 export const user_url =
   "https://wallpapers.com/images/hd/netflix-profile-pictures-1000-x-1000-qo9h82134t9nv0j0.jpg";
 
-  export  const API_OPTIONS = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZmYzYjJkZTY1OWM4ODAwMDMzYThjYzk4NGE0NTI1NyIsInN1YiI6IjY1ZTg3ZTZjYzE1Zjg5MDE4NjE3NzU0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3OWZfROENDPqP7r98Tm5yUPO8p4M61o-5qQmrS14aoI'
-    }
-  };
+export const API_OPTIONS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZmYzYjJkZTY1OWM4ODAwMDMzYThjYzk4NGE0NTI1NyIsInN1YiI6IjY1ZTg3ZTZjYzE1Zjg5MDE4NjE3NzU0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3OWZfROENDPqP7r98Tm5yUPO8p4M61o-5qQmrS14aoI",
+  },
+};
+
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
+
+export const SUPPORTED_LANGUAGES = [
+  { identifier: "en", name: "English" },
+  { identifier: "kn", name: "ಕನ್ನಡ" },
+];

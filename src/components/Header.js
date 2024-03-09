@@ -1,16 +1,23 @@
 // import React from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { logo, user_url } from "../utils/constant";
-import { auth } from "../utils/Firebase";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/Firebase";
+import { changeLanguage } from "../utils/configSlice";
+import { SUPPORTED_LANGUAGES, logo, user_url } from "../utils/constant";
+import { toggleGPTSearch } from "../utils/gptSlice";
 import { addUser, removeUser } from "../utils/userSlice";
-import { useEffect } from "react";
+import Accordion from "./Accordion";
 import Error from "./Error";
 
 const Header = () => {
+  const [showAccordion, setShowAccordion] = useState(false);
   const navigate = useNavigate();
   const currentUser = useSelector((store) => store.user);
+
+  const showGPTSearch = useSelector((store) => store.gpt.gptSearch);
+
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
@@ -24,17 +31,28 @@ const Header = () => {
       });
   };
 
+  const handleClick = () => {
+    setShowAccordion(!showAccordion);
+  };
+
+  const handleGPTSearch = () => {
+    dispatch(toggleGPTSearch());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
-        const { uid, displayName, email, photoURL } = user;
+        const { uid, displayName, email } = user;
         dispatch(
           addUser({
             uid: uid,
             email: email,
             displayName: displayName,
-            photoURL: user_url,
           })
         );
         console.log(currentUser);
@@ -54,13 +72,36 @@ const Header = () => {
       <img src={logo} alt="" className="w-48" />
       {currentUser && (
         <div className="p-4 flex gap-6 align-middle">
-          <img src={user_url} alt="" className="w-16" />
+          <div className="p-2">
+            {showGPTSearch && (
+              <select
+                className="text-white bg-gray-500 p-2 rounded-md"
+                onChange={handleLanguageChange}
+              >
+                {SUPPORTED_LANGUAGES.map((language) => (
+                  <option
+                    value={language.identifier}
+                    key={language.identifier}
+                    className="text-white font-medium text-lg"
+                  >
+                    {language.name}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
           <button
-            onClick={handleSignOut}
-            className="btn text-white font-bold rounded-md px-4 h-10"
+            className="bg-red-600 font-semibold  text-white px-3 py-1 rounded-md "
+            onClick={handleGPTSearch}
           >
-            Sign Out
+            GptSearch
           </button>
+          <img src={user_url} alt="" className="w-12" onClick={handleClick} />
+          {showAccordion && (
+            <div className="absolute mt-14 rounded-md right-4 ">
+              <Accordion onSignOut={handleSignOut} />
+            </div>
+          )}
         </div>
       )}
     </div>
