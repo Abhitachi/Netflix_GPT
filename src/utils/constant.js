@@ -22,3 +22,7 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
   { identifier: "kn", name: "ಕನ್ನಡ" },
 ];
+
+export const OPEN_AI_KEY =
+  "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";
+// "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";
