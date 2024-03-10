@@ -1,6 +1,6 @@
 import React from "react";
 import { bg_url } from "../utils/constant";
-import GptMovieSuggestions from "./GptMovieSuggestions";
+import GptMovieSuggestion from "./GptMovieSuggestion";
 import GptSearchBar from "./GptSearchBar";
 
 const GptSearch = () => {
@@ -10,7 +10,7 @@ const GptSearch = () => {
         <img src={bg_url} alt="" className="h-screen object-cover w-full" />
       </div>
       <GptSearchBar />
-      <GptMovieSuggestions />
+      <GptMovieSuggestion />
     </div>
   );
 };

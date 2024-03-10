@@ -11,8 +11,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZmYzYjJkZTY1OWM4ODAwMDMzYThjYzk4NGE0NTI1NyIsInN1YiI6IjY1ZTg3ZTZjYzE1Zjg5MDE4NjE3NzU0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.3OWZfROENDPqP7r98Tm5yUPO8p4M61o-5qQmrS14aoI",
+    Authorization: "Bearer " + process.env.REACT_APP_TMDB_KEY,
   },
 };
 
@@ -23,6 +22,5 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "kn", name: "ಕನ್ನಡ" },
 ];
 
-export const OPEN_AI_KEY =
-  "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";
+export const OPEN_AI_KEY = process.env.REACT_APP_OPEN_AI_KEY;
 // "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";
