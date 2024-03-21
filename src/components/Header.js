@@ -68,11 +68,11 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
-      <img src={logo} alt="" className="w-48" />
+    <div className="absolute w-screen h-[50px] md:h-auto px-2 md:px-8 py-0 md:py-2 bg-gradient-to-b from-black z-10 flex  flex-row md:flex-row justify-between">
+      <img src={logo} alt="" className="w-24 md:w-48 mx-[10px] md:mx-0" />
       {currentUser && (
-        <div className="p-4 flex gap-6 align-middle">
-          <div className="p-2">
+        <div className="p-2 md:p-4 flex gap-2 md:gap-6 align-middle">
+          <div className="p-0 md:p-2">
             {showGPTSearch && (
               <select
                 className="text-white bg-gray-500 p-2 rounded-md"
@@ -91,12 +91,17 @@ const Header = () => {
             )}
           </div>
           <button
-            className="bg-red-600 font-semibold  text-white px-3 py-1 rounded-md "
+            className="text-xs md:text-xl bg-red-600 font-semibold  text-white px-1 md:px-3 py-1 rounded-md "
             onClick={handleGPTSearch}
           >
             GptSearch
           </button>
-          <img src={user_url} alt="" className="w-12" onClick={handleClick} />
+          <img
+            src={user_url}
+            alt=""
+            className="w-8 md:w-12"
+            onClick={handleClick}
+          />
           {showAccordion && (
             <div className="absolute mt-14 rounded-md right-4 ">
               <Accordion onSignOut={handleSignOut} />

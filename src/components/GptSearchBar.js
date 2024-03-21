@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constant";
+import { addGptMovies } from "../utils/gptSlice";
 import lang from "../utils/languageConstant";
 import openAI from "../utils/openAI";
 import Error from "./Error";
-import { addGptMovies } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const langSelector = useSelector((store) => store.config.lang);
@@ -42,23 +42,23 @@ const GptSearchBar = () => {
     const tmdbResult = await Promise.all(promiseArray);
     console.log(tmdbResult);
 
-    dispatch(addGptMovies({movieNames:gptMovies , movieResults:tmdbResult}));
+    dispatch(addGptMovies({ movieNames: gptMovies, movieResults: tmdbResult }));
   };
 
   return (
-    <div className="pt-[20%] flex justify-center">
+    <div className="pt-[40%] md:pt-[10%] flex justify-center">
       <form
-        className="w-1/2 grid grid-cols-12 gap-2"
+        className="w-full p-2 md:w-1/2 grid grid-cols-12 gap-2"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           type="text"
           ref={searchText}
           placeholder={lang[langSelector].gptSearchPlaceHolder}
-          className="p-2 col-span-10 rounded-xs"
+          className="p-2 col-span-9 rounded-xs"
         />
         <button
-          className="p-2 col-span-2 bg-red-600 text-white font-lg font-semibold rounded-md"
+          className="p-2 col-span-3 md:col-span-2 bg-red-600 text-white font-lg font-semibold rounded-md"
           onClick={handleGPTSearch}
         >
           {lang[langSelector].Search}

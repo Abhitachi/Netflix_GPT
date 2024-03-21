@@ -23,4 +23,3 @@ export const SUPPORTED_LANGUAGES = [
 ];
 
 export const OPEN_AI_KEY = process.env.REACT_APP_OPEN_AI_KEY;
-// "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";
