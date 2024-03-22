@@ -1,4 +1,9 @@
+import { useSelector } from "react-redux";
+
 const Accordion = ({ onSignOut }) => {
+  const user = useSelector((store) => store?.user);
+  if (!user) return;
+
   return (
     <div className="flex absolute flex-col gap-2 bg-black/95 z-50 min-w-[170px] pt-2 border border-gray-500 rounded-md  right-[10px]">
       <a
@@ -13,7 +18,7 @@ const Accordion = ({ onSignOut }) => {
         className="flex items-center px-4 py-2 gap-3 text-xs text-slate-500 hover:text-white"
       >
         <div class="w-5 h-5 bg-red-500"></div>
-        <div>Abhitachi</div>
+        <div>{user.displayName}</div>
       </a>
       <a
         href=""
