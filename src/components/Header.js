@@ -99,7 +99,7 @@ const Header = () => {
           <img
             src={user_url}
             alt=""
-            className="w-8 md:w-12"
+            className="w-8 md:w-12 cursor-pointer"
             onClick={handleClick}
           />
           {showAccordion && (
